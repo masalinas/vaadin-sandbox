@@ -1,9 +1,0 @@
-{
-  "compatibilityMode": false,
-  "productionMode": false,
-  "npmFolder": "/home/miguel/git/vaadin-sandbox",
-  "generatedFolder": "/home/miguel/git/vaadin-sandbox/target/frontend",
-  "frontendFolder": "/home/miguel/git/vaadin-sandbox/frontend",
-  "pnpm.enable": false,
-  "require.home.node": false
-}
