@@ -10,6 +10,10 @@ import com.vaadin.flow.component.checkbox.CheckboxGroupVariant;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
+import com.vaadin.flow.component.radiobutton.RadioGroupVariant;
+import com.vaadin.flow.data.renderer.ComponentRenderer;
+import com.vaadin.flow.data.renderer.TextRenderer;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -18,14 +22,19 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import com.example.application.data.Department;
+import com.example.application.services.DepartmentService;
 import com.example.application.views.main.MainView;
 
 @Route(value = "checkbox", layout = MainView.class)
 @PageTitle("Checkbocx View")
 public class CheckboxView extends VerticalLayout {
+	DepartmentService departmentService;
 	
-	public CheckboxView() {
-		add(CreateCheckbox(),CreateCheckboxGroup());
+	public CheckboxView(DepartmentService departmentService) {
+		this.departmentService = departmentService;
+		
+		add(CreateCheckbox(),CreateCheckboxGroup(), CreateCheckboxGroupWithDepartments(), CreateRadioButtonGroupWithDepartments());
 	}
 	
 	private Component CreateCheckbox() {
@@ -34,6 +43,7 @@ public class CheckboxView extends VerticalLayout {
 		Checkbox checkbox = new Checkbox();
 		checkbox.setLabel("Option");
 		checkbox.setValue(false);
+		checkbox.setIndeterminate(true);
 				
 		/*checkbox.addValueChangeListener(new ValueChangeListener<ValueChangeEvent<Boolean>>() {
 			@Override
@@ -91,7 +101,56 @@ public class CheckboxView extends VerticalLayout {
 			
 		    while(it.hasNext()){
 		    	Notification.show(it.next());		        
-		     }		     			
+		    }		     			
 		}
 	}
+	
+	private Component CreateCheckboxGroupWithDepartments() {
+		HorizontalLayout row = new HorizontalLayout();
+		
+		CheckboxGroup<Department> checkboxGroup = new CheckboxGroup<>();
+		
+		checkboxGroup.setLabel("Label");
+		checkboxGroup.setItems(departmentService.findAll());
+		checkboxGroup.setItemLabelGenerator(Department::getSizeToString);
+		checkboxGroup.addThemeVariants(CheckboxGroupVariant.LUMO_VERTICAL);
+		
+		checkboxGroup.addValueChangeListener(new ValueChangeListener<ValueChangeEvent<Set<Department>>>() {
+			@Override
+			public void valueChanged(ValueChangeEvent<Set<Department>> event) {
+				Iterator<Department> it = event.getValue().iterator();
+				
+			    while(it.hasNext()){
+			    	Notification.show(it.next().getSizeToString());		        
+			    }			   		
+			}
+		});
+		
+		row.add(checkboxGroup);
+		
+		return row;
+	}
+	
+	private Component CreateRadioButtonGroupWithDepartments() {
+		HorizontalLayout row = new HorizontalLayout();
+		
+		RadioButtonGroup<Department> radioButtonGroup = new RadioButtonGroup<>();
+		
+		radioButtonGroup.setLabel("Label");
+		radioButtonGroup.setItems(departmentService.findAll());
+		radioButtonGroup.setRenderer(new TextRenderer<>(Department::getName));
+		radioButtonGroup.addThemeVariants(RadioGroupVariant.LUMO_VERTICAL);
+		
+		radioButtonGroup.addValueChangeListener(new ValueChangeListener<ValueChangeEvent<Department>>() {
+			@Override
+			public void valueChanged(ValueChangeEvent<Department> event) {				
+			    Notification.show(event.getValue().getName());		        			    			   		
+			}
+		});
+		
+		row.add(radioButtonGroup);
+		
+		return row;
+	}
+	
 }
