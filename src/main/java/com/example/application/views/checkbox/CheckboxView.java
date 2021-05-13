@@ -128,7 +128,7 @@ public class CheckboxView extends VerticalLayout {
 		
 		row.add(checkboxGroup);
 		
-		return row;
+		return row; 
 	}
 	
 	private Component CreateRadioButtonGroupWithDepartments() {
