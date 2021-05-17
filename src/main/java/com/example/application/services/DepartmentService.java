@@ -14,9 +14,9 @@ public class DepartmentService {
 	public DepartmentService() {
 		departments = new ArrayList<Department>();
 		
-		departments.add(new Department("Marketing", 10));
-		departments.add(new Department("Software", 20));
-		departments.add(new Department("Administration", 5));
+		departments.add(new Department("Marketing", "El mejor departamento de marketing", 10));
+		departments.add(new Department("Software", "Los mejores desarrolles del mundo", 20));
+		departments.add(new Department("Administration", "Los que me pagan la nómina", 5));
 	}
 	
 	public List<Department> findAll() {

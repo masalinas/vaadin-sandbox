@@ -1,6 +1,7 @@
 import 'construct-style-sheets-polyfill';
 import { DomModule } from "@polymer/polymer/lib/elements/dom-module";
 import { stylesFromTemplate } from "@polymer/polymer/lib/utils/style-gather";
+import { css, unsafeCSS, registerStyles } from '@vaadin/vaadin-themable-mixin/register-styles';
 
 const createLinkReferences = (css, target) => {
   // Unresolved urls are written as '@import url(text);' to the css
@@ -70,6 +71,7 @@ import '@vaadin/vaadin-lumo-styles/typography.js';
 import '@vaadin/vaadin-lumo-styles/color.js';
 import '@vaadin/vaadin-lumo-styles/spacing.js';
 import '@vaadin/vaadin-lumo-styles/badge.js';
+import myGridViewCss from './components/my-grid-view.css';
 
 window.Vaadin = window.Vaadin || {};
 window.Vaadin.Flow = window.Vaadin.Flow || {};
@@ -83,6 +85,12 @@ export const applyTheme = (target) => {
     window.Vaadin.Flow['_vaadintheme_vaadin-sandbox_globalCss'].push(target);
   }
   if (!document['_vaadintheme_vaadin-sandbox_componentCss']) {
+    registerStyles(
+      'my-grid-view',
+      css`
+        ${unsafeCSS(myGridViewCss.toString())}
+      `
+    );
     
     document['_vaadintheme_vaadin-sandbox_componentCss'] = true;
   }

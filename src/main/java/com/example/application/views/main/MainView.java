@@ -22,6 +22,7 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.PageTitle;
 import com.example.application.views.main.MainView;
 import com.example.application.views.example.ExampleView;
+import com.example.application.views.grid.GridView;
 import com.example.application.views.layouts.LayoutView;
 import com.example.application.views.about.AboutView;
 import com.example.application.views.checkbox.CheckboxView;
@@ -92,7 +93,8 @@ public class MainView extends AppLayout {
         return new Tab[]{createTab("Example", ExampleView.class), 
         				 createTab("About", AboutView.class),
         				 createTab("Checkbox", CheckboxView.class),
-        				 createTab("Layouts", LayoutView.class)};
+        				 createTab("Layouts", LayoutView.class),
+        				 createTab("Grid", GridView.class)};
     }
 
     private static Tab createTab(String text, Class<? extends Component> navigationTarget) {
